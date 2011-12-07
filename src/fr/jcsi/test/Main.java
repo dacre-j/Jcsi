@@ -1,0 +1,75 @@
+package fr.jcsi.test;
+
+import java.sql.SQLException;
+
+import	fr.jcsi.bdd.Bdd;
+import	fr.jcsi.model.*;
+
+public class Main
+{
+	public static void main(String[] args) throws SQLException 
+	{
+		Bdd database = new Bdd();
+		database.setAddr("jdbc:mysql://localhost/jcsi");
+		database.setLogin("root");
+		database.setPassword("");
+		database.connect();
+		
+		// CLEAR OLD TESTS DATABASE
+		database.myQuery("DELETE FROM `jcsi`.`category`");
+		database.myQuery("DELETE FROM `jcsi`.`product`");
+		
+		
+        // CATEGORIES
+		//// CREATION DE CATEGORIES
+        Category c1 = new Category(database);
+        c1.setName("Film");
+        c1.create();
+        
+        //// UPDATE DE CATEGORIES
+        Category c2 = new Category(database);
+        c2.setName("TESTMUSIQUE");
+        c2.create();
+        c2.setNewName("Musique");
+        c2.update();
+        
+        //// DELETE DE CATEGORIES
+        Category c3 = new Category(database);
+        c3.setName("DVD");
+        c3.create();
+        c3.delete();
+        
+        
+        // PRODUITS
+        //// CREATION DE PRODUITS
+        Product p1 = new Product(database);
+        p1.setPrice(8);
+        p1.setName("La mort dans l appeau");
+        p1.setDescription("Le nouveau documentaire choc !!!");
+        p1.setCategory(c1);
+        p1.create();
+        
+        ////UPDATE DE PRODUITS
+        Product p2 = new Product(database);
+        p2.setPrice(15);
+        p2.setName("Abbat");
+        p2.setDescription("Le nouveau album choc !!!");
+        p2.setCategory(c1);
+        p2.create();
+        p2.setNewName("ABBAT");
+        p2.setNewPrice(12);
+        p2.setNewDescription("Le nouvel album choc !!!");
+        p2.setNewCategory(c2);
+        p2.update();
+        
+        //// DELETE DE CATEGORIES
+        Product p3 = new Product(database);
+        p3.setPrice(25);
+        p3.setName("Hairy Potier");
+        p3.setDescription("Le nouveau DVD choc !!!");
+        p3.setCategory(c1);
+        p3.create();
+        p3.delete();
+
+	}
+}
