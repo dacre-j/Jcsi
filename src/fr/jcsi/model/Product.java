@@ -10,12 +10,13 @@ public class Product
 	private Bdd			dataBase;
 	
 	private String		name;
-	private String		newName;
 	private int			price;
-	private int			newPrice;
 	private String		description;
-	private String		newDescription;
 	private Category	category;
+
+	private String		newName;
+	private int			newPrice;
+	private String		newDescription;
 	private Category	newCategory;
 
 	public Product(Bdd base)

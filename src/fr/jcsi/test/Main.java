@@ -70,6 +70,41 @@ public class Main
         p3.setCategory(c1);
         p3.create();
         p3.delete();
-
+        
+        
+        // ORDER
+        //// CREATION D'UN ORDER
+        Order o1 = new Order(database);
+        o1.setCustomId(121);
+        o1.setProductId(23);
+        o1.setOrderDate(21, 5, 1987);
+        o1.setDelivaryDate(24, 5, 1987);
+        o1.setQuantity(2);
+        o1.create();
+        
+        ////UPDATE D'UN ORDER
+        Order o2 = new Order(database);
+        o2.setCustomId(123);
+        o2.setProductId(22);
+        o2.setOrderDate(21, 5, 1987);
+        o2.setDelivaryDate(24, 5, 1987);
+        o2.setQuantity(2);
+        o2.create();
+        o2.setNewCustomId(121);
+        o2.setNewProductId(23);
+        o2.setNewOrderDate(22, 12, 2011);
+        o2.setNewDelivaryDate(23, 11, 2011);
+        o2.setNewQuantity(1);
+        o2.update();
+        
+        ////DELETE D'UN ORDER
+        Order o3 = new Order(database);
+        o3.setCustomId(124);
+        o3.setProductId(22);
+        o3.setOrderDate(23, 5, 2011);
+        o3.setDelivaryDate(24, 5, 2011);
+        o3.setQuantity(12);
+        o3.create();
+        o3.delete();
 	}
 }
