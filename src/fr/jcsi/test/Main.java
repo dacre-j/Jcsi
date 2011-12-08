@@ -18,6 +18,7 @@ public class Main
 		// CLEAR OLD TESTS DATABASE
 		database.myQuery("DELETE FROM `jcsi`.`category`");
 		database.myQuery("DELETE FROM `jcsi`.`product`");
+		database.myQuery("DELETE FROM `jcsi`.`orders`");
 		
 		
         // CATEGORIES
@@ -74,35 +75,41 @@ public class Main
         
         // ORDER
         //// CREATION D'UN ORDER
-        Order o1 = new Order(database);
-        o1.setCustomId(121);
-        o1.setProductId(23);
-        o1.setOrderDate(21, 5, 1987);
-        o1.setDelivaryDate(24, 5, 1987);
+        Orders o1 = new Orders(database);
+        o1.setCustomId(124);
+        o1.setProductId(12);
+        
+        Date orderDate = new Date(21, 5, 1987);
+        Date deliveryDate = new Date(24, 5, 2011);
+        Date orderDate2 = new Date(8, 12, 2011);
+        Date deliveryDate2 = new Date(22, 12, 2011);
+        
+        o1.setOrdersDate(orderDate);
+        o1.setDeliveryDate(deliveryDate);
         o1.setQuantity(2);
         o1.create();
         
         ////UPDATE D'UN ORDER
-        Order o2 = new Order(database);
+        Orders o2 = new Orders(database);
         o2.setCustomId(123);
         o2.setProductId(22);
-        o2.setOrderDate(21, 5, 1987);
-        o2.setDelivaryDate(24, 5, 1987);
+        o2.setOrdersDate(orderDate);
+        o2.setDeliveryDate(deliveryDate);
         o2.setQuantity(2);
         o2.create();
         o2.setNewCustomId(121);
         o2.setNewProductId(23);
-        o2.setNewOrderDate(22, 12, 2011);
-        o2.setNewDelivaryDate(23, 11, 2011);
+        o2.setNewOrdersDate(orderDate2);
+        o2.setNewDeliveryDate(deliveryDate2);
         o2.setNewQuantity(1);
         o2.update();
         
         ////DELETE D'UN ORDER
-        Order o3 = new Order(database);
-        o3.setCustomId(124);
-        o3.setProductId(22);
-        o3.setOrderDate(23, 5, 2011);
-        o3.setDelivaryDate(24, 5, 2011);
+        Orders o3 = new Orders(database);
+        o3.setCustomId(13);
+        o3.setProductId(222);
+        o3.setOrdersDate(orderDate);
+        o3.setDeliveryDate(deliveryDate);
         o3.setQuantity(12);
         o3.create();
         o3.delete();
