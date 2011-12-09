@@ -20,7 +20,7 @@ CREATE TABLE product(id int NOT NULL AUTO_INCREMENT, name VARCHAR(255), category
 						FOREIGN KEY (category) REFERENCES category(id)
 						);
 						
-CREATE TABLE ordersing(id int NOT NULL AUTO_INCREMENT, ordersId int, productId int, productQty int,
+CREATE TABLE ordering(id int NOT NULL AUTO_INCREMENT, ordersId int, productId int, productQty int,
 							PRIMARY KEY (id),
 							FOREIGN KEY (ordersId) REFERENCES orders(id),
 							FOREIGN KEY (productId) REFERENCES product(id)
@@ -31,4 +31,4 @@ CREATE TABLE ordersing(id int NOT NULL AUTO_INCREMENT, ordersId int, productId i
 INSERT INTO category(name) VALUES("objet volant");
 INSERT INTO product(name, category, price, description) VALUES("avion", 1, 12000, "C'est tres bien.");
 INSERT INTO orders(customerId, ordersDate, deliveryDate) VALUES(1, "2008-10-02", "2008-10-17");
-INSERT INTO ordersing(ordersrefId, productId, productQty) VALUES(1, 1, 42);*/
+INSERT INTO ordering(ordersrefId, productId, productQty) VALUES(1, 1, 42);*/
