@@ -40,7 +40,41 @@ public class Main
         c3.create();
         c3.delete();
         
+        // CLIENTS
+        // CREATION CLIENT
+        Customer client = new Customer(database);
+        client.setFname("Francois");
+        client.setLname("Clezio");
+        client.setLogin("Winter");
+        client.setPassword("pomme_de_terre");
+        client.setPhone("0836656565");
+        client.setAdress("42 rue de la pomme de pin");
+        client.create();
         
+        // UPDATE CLIENT
+        Customer client2 = new Customer(database);
+        client2.setFname("Jeanjean");
+        client2.setLname("Dakre");
+        client2.setLogin("DeBrevan");
+        client2.setPassword("mama");
+        client2.setPhone("0642424242");
+        client2.setAdress("42 chemin de la noisette oooh");
+        client2.create();
+        client2.setNewLogin("SuperDeBrevan");
+        client2.setNewLname("dacre");
+        client2.update();
+        
+        // DELETE CLIENT
+        Customer client3 = new Customer(database);
+        client3.setFname("Jean-Francois");
+        client3.setLname("Baltzinger");
+        client3.setLogin("Tiks");
+        client3.setPassword("papy");
+        client3.setPhone("999999999");
+        client3.setAdress("2 rue de la fondu");
+        client3.create();
+        client3.delete();
+     
         // PRODUITS
         //// CREATION DE PRODUITS
         Product p1 = new Product(database);
