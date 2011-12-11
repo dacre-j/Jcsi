@@ -10,9 +10,9 @@ CREATE TABLE category(id int NOT NULL AUTO_INCREMENT, name VARCHAR(255),
 						PRIMARY KEY (id)
 						);
 
-CREATE TABLE orders(id int NOT NULL AUTO_INCREMENT, customId int, productId int, ordersDate VARCHAR(255), deliveryDate VARCHAR(255), quantity int,
+CREATE TABLE orders(id int NOT NULL AUTO_INCREMENT, productId int, ordersDate VARCHAR(255), deliveryDate VARCHAR(255), quantity int,
 					PRIMARY KEY (id),
-					FOREIGN KEY (customId) REFERENCES customer(id)
+					FOREIGN KEY (productId) REFERENCES orders(id)
 					);
 
 CREATE TABLE product(id int NOT NULL AUTO_INCREMENT, name VARCHAR(255), category VARCHAR(255), price int, description VARCHAR(255),
@@ -20,10 +20,10 @@ CREATE TABLE product(id int NOT NULL AUTO_INCREMENT, name VARCHAR(255), category
 						FOREIGN KEY (category) REFERENCES category(id)
 						);
 						
-CREATE TABLE ordering(id int NOT NULL AUTO_INCREMENT, ordersId int, productId int, productQty int,
+CREATE TABLE ordering(id int NOT NULL AUTO_INCREMENT, customerId int, ordersId int,
 							PRIMARY KEY (id),
-							FOREIGN KEY (ordersId) REFERENCES orders(id),
-							FOREIGN KEY (productId) REFERENCES product(id)
+							FOREIGN KEY (customerId) REFERENCES customer(id),
+							FOREIGN KEY (ordersId) REFERENCES orders(id)
 							);
 							
 

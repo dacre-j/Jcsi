@@ -19,7 +19,7 @@ public class Date
 
 	public String toString()
 	{
-		return "Date: " + day + "/" + month + "/" + year;
+		return "Date: " + day + "/" + month + "/" + year + "\n";
 	}
 
 	public String getDate() {return day + "/" + month + "/" + year;}	

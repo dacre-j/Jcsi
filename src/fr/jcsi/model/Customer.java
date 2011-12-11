@@ -53,6 +53,19 @@ public class Customer
 		dataBase = database;
 	}
 	
+	public String toString()
+	{
+		return "Customer instance"
+				+ "\n\tlogin: " + login
+				+ "\n\tpassword: ****"
+				+ "\n\tlname: " + lname
+				+ "\n\tfname: " + fname
+				+ "\n\tphone: " + phone
+				+ "\n\tadress: " + adress
+				+ "\n"
+				;
+	}
+	
 	public void setCustomer(String _login, String _pwd, String _lname, String _fname, String _phone, String _adress)
 	{
 		login 		= _login;

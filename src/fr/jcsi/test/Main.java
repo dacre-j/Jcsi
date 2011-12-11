@@ -51,6 +51,7 @@ public class Main
         client3.create();
         client3.delete();
         
+		System.out.print(client.toString());
         return client;
 	}
 	
@@ -75,6 +76,7 @@ public class Main
         c3.create();
         c3.delete();
         
+        System.out.print(c1.toString());
         return c1;
 	}
 	
@@ -111,15 +113,15 @@ public class Main
 	    p3.create();
 	    p3.delete();
 	    
+		System.out.print(p1.toString());
 	    return p1;
 	}
 
-	public static Orders	unitOrder(Bdd dataBase, Customer client, Product product) throws SQLException
+	public static Orders	unitOrder(Bdd dataBase, Product product) throws SQLException
 	{
 		// ORDER
 		//// CREATION D'UN ORDER
 		Orders o1 = new Orders(dataBase);
-		o1.setCustomId(client.getId());
 		o1.setProductId(product.getId());
 		
 		Date orderDate = new Date(21, 5, 1987);
@@ -134,13 +136,11 @@ public class Main
 		
 		////UPDATE D'UN ORDER
 		Orders o2 = new Orders(dataBase);
-		o2.setCustomId(client.getId());
 		o2.setProductId(product.getId());
 		o2.setOrdersDate(orderDate);
 		o2.setDeliveryDate(deliveryDate);
 		o2.setQuantity(5);
 		o2.create();
-		o2.setNewCustomId(client.getId());
 		o2.setNewProductId(product.getId());
 		o2.setNewOrdersDate(orderDate2);
 		o2.setNewDeliveryDate(deliveryDate2);
@@ -149,22 +149,43 @@ public class Main
 		
 		////DELETE D'UN ORDER
 		Orders o3 = new Orders(dataBase);
-		o3.setCustomId(client.getId());
 		o3.setProductId(product.getId());
 		o3.setOrdersDate(orderDate);
 		o3.setDeliveryDate(deliveryDate);
 		o3.setQuantity(12);
 		o3.create();
 		o3.delete();
-		
+
+		System.out.print(o1.toString());
 		return o1;
 	}	
 
+	public static Ordering	unitOrdering(Bdd database, Customer customer, Orders orders) throws SQLException
+	{
+		// ORDERING
+		//// CREATION D'UN ORDERING
+		Ordering or1 = new Ordering(database);
+		or1.setCustomerId(customer.getId());
+		or1.addOrders(orders);
+		or1.create();
+		
+		//// DELETE D'UN ORDERING
+		Ordering or2 = new Ordering(database);
+		or2.setCustomerId(4242);
+		or2.addOrders(orders);
+		or2.create();
+		or2.delete();
+		
+		System.out.print(or1.toString());
+		return or1;
+	}
+	
 	public static void unitAll(Bdd dataBase) throws SQLException
 	{
 		Customer	customer;
 		Category	category;
 		Product		product;
+		Orders		orders;
 		
 		dataBase.setAddr("jdbc:mysql://localhost/jcsi");
 		dataBase.setLogin("root");
@@ -176,10 +197,12 @@ public class Main
 		dataBase.myQuery("DELETE FROM `jcsi`.`category`");
 		dataBase.myQuery("DELETE FROM `jcsi`.`product`");
 		dataBase.myQuery("DELETE FROM `jcsi`.`orders`");
+		dataBase.myQuery("DELETE FROM `jcsi`.`ordering`");
 		
 		customer = unitClient(dataBase);
 		category = unitCategory(dataBase);
 		product = unitProduct(dataBase, category);
-		unitOrder(dataBase, customer, product);
+		orders = unitOrder(dataBase, product);
+		unitOrdering(dataBase, customer, orders);
 	}	
 }

@@ -19,7 +19,7 @@ public class Category
 
 	public String toString()
 	{
-		return "Category instance, name= " + name;
+		return "Category instance\n\tname: " + name + "\n";
 	}
 	
 	public void create() throws SQLException

@@ -27,7 +27,12 @@ public class Product
 	
 	public String toString()
 	{
-		return "Product instance, name: " + name + ", price: " + price + ", description: " + description + ", category: " + category;
+		return "Product instance"
+				+ "\n\tname: " + name
+				+ "\n\tprice: " + price
+				+ "\n\tdescription: " + description
+				+ "\n\tcategory:\n" + category
+				+ "\n";
 	}
 	
 	public void create() throws SQLException
