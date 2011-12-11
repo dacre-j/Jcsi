@@ -9,6 +9,7 @@ public class Product
 {
 	private Bdd			dataBase;
 	
+	private int			id;	
 	private String		name;
 	private int			price;
 	private String		description;
@@ -35,6 +36,12 @@ public class Product
 				"		 VALUES (NULL, '" + name + "', '" + category.getName() + "', '" + price + "', '" + description + "');";
 		System.out.print(query + "\n");
 		dataBase.myQuery(query);
+
+		query = "SELECT `id` FROM `jcsi`.`product` WHERE `product`.`name` = '" + name + "' AND `product`.`description` = '" + description + "'";
+		dataBase.result = dataBase.state.executeQuery(query);
+		
+		if (dataBase.result.next())
+			id = dataBase.result.getInt("id");
 	}
 	
 	public void update() throws SQLException
@@ -44,8 +51,7 @@ public class Product
 				+ ", `price` = '" + newPrice + "'"
 				+ ", `description` = '" + newDescription + "'"
 				+ ", `category` = '" + newCategory.getName() + "'"
-				+ " WHERE  `product`.`name`  ='" + name + "'"
-				+ " AND `product`.`description`  ='" + description + "'"
+				+ " WHERE  `product`.`id`  ='" + id + "'"
 				+ " LIMIT 1 ;";
 		System.out.print(query + "\n");
 		dataBase.myQuery(query);
@@ -58,7 +64,7 @@ public class Product
 	
 	public void delete() throws SQLException
 	{	
-		String query = "DELETE FROM `jcsi`.`product` WHERE `product`.`id` = '" + name + "' AND `product`.`description` = '" + description + "';";
+		String query = "DELETE FROM `jcsi`.`product` WHERE `product`.`id` = '" + id + "';";
 		System.out.print(query + "\n");
 		dataBase.myQuery(query);
 	}
@@ -68,6 +74,7 @@ public class Product
 	public void setDescription(String description) {this.description = description;}
 	public void setCategory(Category category) {this.category = category;}
 
+	public int		getId()	{return id;}
 	public String	getName() {return name;}
 	public int 		getPrice() {return price;}
 	public String 	getDescription() {return description;}

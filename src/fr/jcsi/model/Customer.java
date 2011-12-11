@@ -6,7 +6,8 @@ import fr.jcsi.bdd.Bdd;
 
 public class Customer 
 {
-	private Bdd				Database;
+	private Bdd				dataBase;
+	private int				id;	
 	private String          login;
     private String          password;
     private String          lname;
@@ -20,6 +21,7 @@ public class Customer
     private String          newPhone;
     private String          newAdress;
 
+    public int getId()		 					{return id;}
     public String getLogin() 					{return login;}
 	public String getPassword() 				{return password;}
 	public String getLname() 					{return lname;}
@@ -48,7 +50,7 @@ public class Customer
 	
 	public Customer(Bdd database)
 	{	
-		Database = database;
+		dataBase = database;
 	}
 	
 	public void setCustomer(String _login, String _pwd, String _lname, String _fname, String _phone, String _adress)
@@ -71,14 +73,29 @@ public class Customer
 		newAdress = adress;
 		String query = "INSERT INTO `jcsi`.`customer` (`id`, `login`, `password`, `lName`, `fName`, `phone`, `adress`) VALUES (NULL, '"+login+"', '"+password+"', '"+lname+"', '"+fname+"', '"+phone+"', '"+adress+"');";
 		System.out.print(query + "\n");
-		Database.myQuery(query);
+		dataBase.myQuery(query);
+		
+		query = "SELECT `id` FROM `jcsi`.`customer` WHERE `customer`.`login` = '" + login + "'";
+		dataBase.result = dataBase.state.executeQuery(query);
+		
+		if (dataBase.result.next())
+			id = dataBase.result.getInt("id");
+
 	}
 	
 	public void update() throws SQLException
 	{
-		String query = "UPDATE  `jcsi`.`customer` SET  `login` =  '"+newLogin+"',`password` =  '"+newPassword+"',`lName` =  '"+newLname+"',`fName` =  '"+newFname+"',`phone` =  '"+newPhone+"',`adress` =  '"+newAdress+"' WHERE  `customer`.`login` ='"+login+"' LIMIT 1 ;";
+		String query = "UPDATE  `jcsi`.`customer` SET "
+				+ "`login` =  '" + newLogin
+				+ "',`password` =  '"+ newPassword
+				+ "',`lName` =  '" + newLname
+				+"',`fName` =  '" + newFname
+				+ "',`phone` =  '" + newPhone
+				+ "',`adress` =  '" + newAdress
+				+ "' WHERE  `customer`.`id` ='" + id + "' LIMIT 1 ;";
 		System.out.print(query + "\n");
-		Database.myQuery(query);
+		dataBase.myQuery(query);
+		
 		login = newLogin;
 		password = newPassword;
 		lname = newLname;
@@ -89,8 +106,8 @@ public class Customer
 	
 	public void delete() throws SQLException
 	{
-		String query = "DELETE FROM `jcsi`.`customer` WHERE `customer`.`login` = '"+ login +"';";
+		String query = "DELETE FROM `jcsi`.`customer` WHERE `customer`.`id` = '"+ id +"';";
 		System.out.print(query + "\n");
-		Database.myQuery(query);
+		dataBase.myQuery(query);
 	}
 }

@@ -9,40 +9,16 @@ public class Main
 {
 	public static void main(String[] args) throws SQLException 
 	{
-		Bdd database = new Bdd();
-		database.setAddr("jdbc:mysql://localhost/jcsi");
-		database.setLogin("root");
-		database.setPassword("");
-		database.connect();
+		Bdd dataBase = new Bdd();
 		
-		// CLEAR OLD TESTS DATABASE
-		database.myQuery("DELETE FROM `jcsi`.`category`");
-		database.myQuery("DELETE FROM `jcsi`.`product`");
-		database.myQuery("DELETE FROM `jcsi`.`orders`");
-		
-		
-        // CATEGORIES
-		//// CREATION DE CATEGORIES
-        Category c1 = new Category(database);
-        c1.setName("Film");
-        c1.create();
-        
-        //// UPDATE DE CATEGORIES
-        Category c2 = new Category(database);
-        c2.setName("TESTMUSIQUE");
-        c2.create();
-        c2.setNewName("Musique");
-        c2.update();
-        
-        //// DELETE DE CATEGORIES
-        Category c3 = new Category(database);
-        c3.setName("DVD");
-        c3.create();
-        c3.delete();
-        
+		unitAll(dataBase);
+	}
+
+	public static Customer	unitClient(Bdd dataBase) throws SQLException
+	{
         // CLIENTS
-        // CREATION CLIENT
-        Customer client = new Customer(database);
+        //// CREATION CLIENT
+        Customer client = new Customer(dataBase);
         client.setFname("Francois");
         client.setLname("Clezio");
         client.setLogin("Winter");
@@ -51,8 +27,8 @@ public class Main
         client.setAdress("42 rue de la pomme de pin");
         client.create();
         
-        // UPDATE CLIENT
-        Customer client2 = new Customer(database);
+        //// UPDATE CLIENT
+        Customer client2 = new Customer(dataBase);
         client2.setFname("Jeanjean");
         client2.setLname("Dakre");
         client2.setLogin("DeBrevan");
@@ -64,8 +40,8 @@ public class Main
         client2.setNewLname("dacre");
         client2.update();
         
-        // DELETE CLIENT
-        Customer client3 = new Customer(database);
+        //// DELETE CLIENT
+        Customer client3 = new Customer(dataBase);
         client3.setFname("Jean-Francois");
         client3.setLname("Baltzinger");
         client3.setLogin("Tiks");
@@ -74,78 +50,136 @@ public class Main
         client3.setAdress("2 rue de la fondu");
         client3.create();
         client3.delete();
-     
-        // PRODUITS
-        //// CREATION DE PRODUITS
-        Product p1 = new Product(database);
-        p1.setPrice(8);
-        p1.setName("La mort dans l appeau");
-        p1.setDescription("Le nouveau documentaire choc !!!");
-        p1.setCategory(c1);
-        p1.create();
         
-        ////UPDATE DE PRODUITS
-        Product p2 = new Product(database);
-        p2.setPrice(15);
-        p2.setName("Abbat");
-        p2.setDescription("Le nouveau album choc !!!");
-        p2.setCategory(c1);
-        p2.create();
-        p2.setNewName("ABBAT");
-        p2.setNewPrice(12);
-        p2.setNewDescription("Le nouvel album choc !!!");
-        p2.setNewCategory(c2);
-        p2.update();
+        return client;
+	}
+	
+	public static Category	unitCategory(Bdd dataBase) throws SQLException
+	{
+        // CATEGORIES
+		//// CREATION DE CATEGORIES
+        Category c1 = new Category(dataBase);
+        c1.setName("Film");
+        c1.create();
+        
+        //// UPDATE DE CATEGORIES
+        Category c2 = new Category(dataBase);
+        c2.setName("TESTMUSIQUE");
+        c2.create();
+        c2.setNewName("Musique");
+        c2.update();
         
         //// DELETE DE CATEGORIES
-        Product p3 = new Product(database);
-        p3.setPrice(25);
-        p3.setName("Hairy Potier");
-        p3.setDescription("Le nouveau DVD choc !!!");
-        p3.setCategory(c1);
-        p3.create();
-        p3.delete();
+        Category c3 = new Category(dataBase);
+        c3.setName("DVD");
+        c3.create();
+        c3.delete();
         
-        
-        // ORDER
-        //// CREATION D'UN ORDER
-        Orders o1 = new Orders(database);
-        o1.setCustomId(124);
-        o1.setProductId(12);
-        
-        Date orderDate = new Date(21, 5, 1987);
-        Date deliveryDate = new Date(24, 5, 2011);
-        Date orderDate2 = new Date(8, 12, 2011);
-        Date deliveryDate2 = new Date(22, 12, 2011);
-        
-        o1.setOrdersDate(orderDate);
-        o1.setDeliveryDate(deliveryDate);
-        o1.setQuantity(2);
-        o1.create();
-        
-        ////UPDATE D'UN ORDER
-        Orders o2 = new Orders(database);
-        o2.setCustomId(123);
-        o2.setProductId(22);
-        o2.setOrdersDate(orderDate);
-        o2.setDeliveryDate(deliveryDate);
-        o2.setQuantity(2);
-        o2.create();
-        o2.setNewCustomId(121);
-        o2.setNewProductId(23);
-        o2.setNewOrdersDate(orderDate2);
-        o2.setNewDeliveryDate(deliveryDate2);
-        o2.setNewQuantity(1);
-        o2.update();
-        
-        ////DELETE D'UN ORDER
-        Orders o3 = new Orders(database);
-        o3.setCustomId(13);
-        o3.setProductId(222);
-        o3.setOrdersDate(orderDate);
-        o3.setDeliveryDate(deliveryDate);
-        o3.setQuantity(12);
-        o3.create();
-        o3.delete();
+        return c1;
 	}
+	
+	public static Product	unitProduct(Bdd dataBase, Category category) throws SQLException
+	{
+		// PRODUITS
+	    //// CREATION DE PRODUITS
+	    Product p1 = new Product(dataBase);
+	    p1.setPrice(8);
+	    p1.setName("La mort dans l appeau");
+	    p1.setDescription("Le nouveau documentaire choc !!!");
+	    p1.setCategory(category);
+	    p1.create();
+	    
+	    ////UPDATE DE PRODUITS
+	    Product p2 = new Product(dataBase);
+	    p2.setPrice(15);
+	    p2.setName("Abbat");
+	    p2.setDescription("Le nouveau album choc !!!");
+	    p2.setCategory(category);
+	    p2.create();
+	    p2.setNewName("ABBAT");
+	    p2.setNewPrice(12);
+	    p2.setNewDescription("Le nouveau DVD choc !!!");
+	    p2.setNewCategory(category);
+	    p2.update();
+	    
+	    //// DELETE DE PRODUITS
+	    Product p3 = new Product(dataBase);
+	    p3.setPrice(25);
+	    p3.setName("Hairy Potier");
+	    p3.setDescription("Le nouveau DVD choc !!!");
+	    p3.setCategory(category);
+	    p3.create();
+	    p3.delete();
+	    
+	    return p1;
+	}
+
+	public static Orders	unitOrder(Bdd dataBase, Customer client, Product product) throws SQLException
+	{
+		// ORDER
+		//// CREATION D'UN ORDER
+		Orders o1 = new Orders(dataBase);
+		o1.setCustomId(client.getId());
+		o1.setProductId(product.getId());
+		
+		Date orderDate = new Date(21, 5, 1987);
+		Date deliveryDate = new Date(24, 5, 2011);
+		Date orderDate2 = new Date(8, 12, 2011);
+		Date deliveryDate2 = new Date(22, 12, 2011);
+		
+		o1.setOrdersDate(orderDate);
+		o1.setDeliveryDate(deliveryDate);
+		o1.setQuantity(2);
+		o1.create();
+		
+		////UPDATE D'UN ORDER
+		Orders o2 = new Orders(dataBase);
+		o2.setCustomId(client.getId());
+		o2.setProductId(product.getId());
+		o2.setOrdersDate(orderDate);
+		o2.setDeliveryDate(deliveryDate);
+		o2.setQuantity(5);
+		o2.create();
+		o2.setNewCustomId(client.getId());
+		o2.setNewProductId(product.getId());
+		o2.setNewOrdersDate(orderDate2);
+		o2.setNewDeliveryDate(deliveryDate2);
+		o2.setNewQuantity(1);
+		o2.update();
+		
+		////DELETE D'UN ORDER
+		Orders o3 = new Orders(dataBase);
+		o3.setCustomId(client.getId());
+		o3.setProductId(product.getId());
+		o3.setOrdersDate(orderDate);
+		o3.setDeliveryDate(deliveryDate);
+		o3.setQuantity(12);
+		o3.create();
+		o3.delete();
+		
+		return o1;
+	}	
+
+	public static void unitAll(Bdd dataBase) throws SQLException
+	{
+		Customer	customer;
+		Category	category;
+		Product		product;
+		
+		dataBase.setAddr("jdbc:mysql://localhost/jcsi");
+		dataBase.setLogin("root");
+		dataBase.setPassword("");
+		dataBase.connect();
+		
+		// CLEAR OLD TESTS dataBase
+		dataBase.myQuery("DELETE FROM `jcsi`.`customer`");
+		dataBase.myQuery("DELETE FROM `jcsi`.`category`");
+		dataBase.myQuery("DELETE FROM `jcsi`.`product`");
+		dataBase.myQuery("DELETE FROM `jcsi`.`orders`");
+		
+		customer = unitClient(dataBase);
+		category = unitCategory(dataBase);
+		product = unitProduct(dataBase, category);
+		unitOrder(dataBase, customer, product);
+	}	
 }
