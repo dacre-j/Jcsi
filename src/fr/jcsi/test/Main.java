@@ -14,6 +14,32 @@ public class Main
 		unitAll(dataBase);
 	}
 
+	public static void unitAll(Bdd dataBase) throws SQLException
+	{
+		Customer	customer;
+		Category	category;
+		Product		product;
+		Orders		orders;
+		
+		dataBase.setAddr("jdbc:mysql://localhost/jcsi");
+		dataBase.setLogin("root");
+		dataBase.setPassword("");
+		dataBase.connect();
+		
+		// CLEAR OLD TESTS dataBase
+		dataBase.myQuery("DELETE FROM `jcsi`.`customer`");
+		dataBase.myQuery("DELETE FROM `jcsi`.`category`");
+		dataBase.myQuery("DELETE FROM `jcsi`.`product`");
+		dataBase.myQuery("DELETE FROM `jcsi`.`orders`");
+		dataBase.myQuery("DELETE FROM `jcsi`.`ordering`");
+		
+		customer = unitClient(dataBase);
+		category = unitCategory(dataBase);
+		product = unitProduct(dataBase, category);
+		orders = unitOrder(dataBase, product);
+		unitOrdering(dataBase, customer, orders);
+	}	
+	
 	public static Customer	unitClient(Bdd dataBase) throws SQLException
 	{
         // CLIENTS
@@ -180,29 +206,4 @@ public class Main
 		return or1;
 	}
 	
-	public static void unitAll(Bdd dataBase) throws SQLException
-	{
-		Customer	customer;
-		Category	category;
-		Product		product;
-		Orders		orders;
-		
-		dataBase.setAddr("jdbc:mysql://localhost/jcsi");
-		dataBase.setLogin("root");
-		dataBase.setPassword("");
-		dataBase.connect();
-		
-		// CLEAR OLD TESTS dataBase
-		dataBase.myQuery("DELETE FROM `jcsi`.`customer`");
-		dataBase.myQuery("DELETE FROM `jcsi`.`category`");
-		dataBase.myQuery("DELETE FROM `jcsi`.`product`");
-		dataBase.myQuery("DELETE FROM `jcsi`.`orders`");
-		dataBase.myQuery("DELETE FROM `jcsi`.`ordering`");
-		
-		customer = unitClient(dataBase);
-		category = unitCategory(dataBase);
-		product = unitProduct(dataBase, category);
-		orders = unitOrder(dataBase, product);
-		unitOrdering(dataBase, customer, orders);
-	}	
 }
