@@ -24,8 +24,10 @@ public class Category
 	
 	public void create() throws SQLException
 	{
-		String query = "INSERT INTO  `jcsi`.`category` (`id`, `name`)"
-				+ " VALUES (NULL ,  '" + name + "');";
+		newName = name;
+		
+		String query = "INSERT INTO  `jcsi`.`category` (`id`, `name`) " +
+				"VALUES (NULL ,  '" + name + "');";
 		System.out.print(query + "\n");
 		dataBase.myQuery(query);
 		
@@ -38,10 +40,10 @@ public class Category
 	
 	public void update() throws SQLException
 	{
-		String query = "UPDATE `jcsi`.`category` SET  "
-				+ "`name` =  '" + newName + "'"
-				+ " WHERE  `category`.`id`  ='" + id + "'"
-				+ " LIMIT 1 ;";
+		String query = "UPDATE `jcsi`.`category` SET " +
+				"`name` =  '" + newName + "' " +
+				"WHERE  `category`.`id`  ='" + id + "' " +
+				"LIMIT 1 ;";
 		System.out.print(query + "\n");
 		dataBase.myQuery(query);
 		
@@ -50,9 +52,27 @@ public class Category
 	
 	public void delete() throws SQLException
 	{	
-		String query = "DELETE FROM `jcsi`.`category` WHERE `category`.`id` = '" + id + "';";
+		String	query = "DELETE FROM `jcsi`.`category` WHERE `category`.`id` = '" + id + "';";
+
 		System.out.print(query + "\n");
 		dataBase.myQuery(query);
+	}
+	
+	public boolean	exist() throws SQLException
+	{
+		String	query;
+		
+		query = "SELECT `id` FROM `jcsi`.`category` WHERE `category`.`name` = '" + name + "'";
+		System.out.print(query + "\n");
+		dataBase.result = dataBase.state.executeQuery(query);
+		
+		if (dataBase.result.next())
+		{
+			System.out.print("Category exists in dataBase\n");
+			return true;
+		}
+		System.out.print("Category does not exist in dataBase\n");
+		return false;
 	}
 	
 	public int getId() {return id;}

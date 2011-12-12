@@ -23,26 +23,36 @@ public class Product
 	public Product(Bdd base)
 	{
 		dataBase = base;
+		id = -1;
 	}
 	
 	public String toString()
 	{
-		return "Product instance"
-				+ "\n\tname: " + name
-				+ "\n\tprice: " + price
-				+ "\n\tdescription: " + description
-				+ "\n\tcategory:\n" + category
-				+ "\n";
+		return "Product instance" +
+				"\n\tname: " + name +
+				"\n\tprice: " + price +
+				"\n\tdescription: " + description +
+				"\n\tcategory:\n" + category +
+				"\n";
 	}
 	
 	public void create() throws SQLException
 	{
+		newName = name;
+		newPrice = price;
+		newDescription = description;
+		newCategory = category;
+		
 		String query = "INSERT INTO `jcsi`.`product` (`id`, `name`, `category`, `price`, `description`)" +
 				"		 VALUES (NULL, '" + name + "', '" + category.getName() + "', '" + price + "', '" + description + "');";
 		System.out.print(query + "\n");
-		dataBase.myQuery(query);
-
-		query = "SELECT `id` FROM `jcsi`.`product` WHERE `product`.`name` = '" + name + "' AND `product`.`description` = '" + description + "'";
+		dataBase.myQuery(query); 
+		
+		query = "SELECT `id` FROM `jcsi`.`product` " +
+				"WHERE `product`.`name` = '" + name + "' " +
+				"AND `product`.`price` = '" + price + "' " +
+				"AND `product`.`description` = '" + description + "' " +
+				"AND `product`.`category` = '" + category.getName() + "'";
 		dataBase.result = dataBase.state.executeQuery(query);
 		
 		if (dataBase.result.next())
@@ -51,13 +61,13 @@ public class Product
 	
 	public void update() throws SQLException
 	{
-		String query = "UPDATE `jcsi`.`product` SET  "
-				+ "`name` =  '" + newName + "'"
-				+ ", `price` = '" + newPrice + "'"
-				+ ", `description` = '" + newDescription + "'"
-				+ ", `category` = '" + newCategory.getName() + "'"
-				+ " WHERE  `product`.`id`  ='" + id + "'"
-				+ " LIMIT 1 ;";
+		String query = "UPDATE `jcsi`.`product` SET  " +
+				"`name` =  '" + newName + "', " +
+				"`price` = '" + newPrice + "', " +
+				"`description` = '" + newDescription + "', " +
+				"`category` = '" + newCategory.getName() + "'" +
+				" WHERE  `product`.`id`  ='" + id + "'" +
+				" LIMIT 1 ;";
 		System.out.print(query + "\n");
 		dataBase.myQuery(query);
 		
@@ -72,6 +82,27 @@ public class Product
 		String query = "DELETE FROM `jcsi`.`product` WHERE `product`.`id` = '" + id + "';";
 		System.out.print(query + "\n");
 		dataBase.myQuery(query);
+	}
+	
+	public boolean	exist() throws SQLException
+	{
+		String	query;
+		
+		query = "SELECT `id` FROM `jcsi`.`product` " +
+				"WHERE `product`.`name` = '" + name + "' " +
+				"AND `product`.`price` = '" + price + "' " +
+				"AND `product`.`description` = '" + description + "' " +
+				"AND `product`.`category` = '" + category.getName() + "'";
+		System.out.print(query + "\n");
+		dataBase.result = dataBase.state.executeQuery(query);
+		
+		if (dataBase.result.next())
+		{
+			System.out.print("Product exists in dataBase\n");
+			return true;
+		}
+		System.out.print("Product does not exist in dataBase\n");
+		return false;
 	}
 	
 	public void setName(String name) {this.name = name;}

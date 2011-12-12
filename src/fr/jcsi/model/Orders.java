@@ -22,35 +22,40 @@ public class Orders
 	public Orders(Bdd database)
 	{	
 		dataBase = database;
+		id = -1;
 	}
 	
 	public String toString()
 	{
-		return "Order instance"
-					+ "\n\tproductId: " + productId
-					+ "\n\tordersDate: " + ordersDate.getDate()
-					+ "\n\tdeliveryDate: " + deliveryDate.getDate()
-					+ "\n\tquantity: " + quantity
-					+ "\n";
+		return "Order instance" +
+			"\n\tproductId: " + productId +
+			"\n\tordersDate: " + ordersDate.getDate() +
+			"\n\tdeliveryDate: " + deliveryDate.getDate() +
+			"\n\tquantity: " + quantity +
+			"\n";
 	}
 	
 	public void create() throws SQLException
 	{
-		String query = "INSERT INTO `jcsi`.`orders` (`id`, `productId`, `ordersDate`, `deliveryDate`, `quantity`)" +
-				"		 VALUES (NULL, '" 
-						+ productId + "', '"
-						+ ordersDate.getDate() + "', '"
-						+ deliveryDate.getDate() + "', '"
-						+ quantity + "');";
+		newProductId = productId;
+		newOrdersDate = ordersDate;
+		newDeliveryDate = deliveryDate;
+		newQuantity = quantity;
+
+		String query = "INSERT INTO `jcsi`.`orders` (`id`, `productId`, `ordersDate`, `deliveryDate`, `quantity`) " +
+					"VALUES (NULL, '" +
+					productId + "', '" +
+					ordersDate.getDate() + "', '" +
+					deliveryDate.getDate() + "', '" +
+					quantity + "');";
 		System.out.print(query + "\n");
 		dataBase.myQuery(query);
 		
-		query = "SELECT `id` FROM `jcsi`.`orders`"
-				+ " WHERE `orders`.`productId` = '" + productId
-				+ "' AND `orders`.`ordersDate` = '" + ordersDate.getDate()
-				+ "' AND `orders`.`deliveryDate` = '" + deliveryDate.getDate()
-				+ "' AND `orders`.`quantity` = '" + quantity
-				+ "'";
+		query = "SELECT `id` FROM `jcsi`.`orders` " +
+			"WHERE `orders`.`productId` = '" + productId + "' " +
+			"AND `orders`.`ordersDate` = '" + ordersDate.getDate() + "' " +
+			"AND `orders`.`deliveryDate` = '" + deliveryDate.getDate() + "' " +
+			"AND `orders`.`quantity` = '" + quantity + "'";
 		dataBase.result = dataBase.state.executeQuery(query);
 		
 		if (dataBase.result.next())
@@ -59,13 +64,13 @@ public class Orders
 	
 	public void update() throws SQLException
 	{
-		String query = "UPDATE `jcsi`.`orders` SET"
-				+ " `productId` = '" + newProductId + "'"
-				+ ", `ordersDate` = '" + newOrdersDate.getDate() + "'"
-				+ ", `deliveryDate` = '" + newDeliveryDate.getDate() + "'"
-				+ ", `quantity` = '" + quantity + "'"
-				+ " WHERE  `orders`.`id`  ='" + id + "'"
-				+ " LIMIT 1 ;";
+		String query = "UPDATE `jcsi`.`orders` SET " +
+				"`productId` = '" + newProductId + "', " +
+				"`ordersDate` = '" + newOrdersDate.getDate() + "', " +
+				"`deliveryDate` = '" + newDeliveryDate.getDate() + "', " +
+				"`quantity` = '" + newQuantity + "' " +
+				"WHERE  `orders`.`id`  ='" + id + "' " +
+				"LIMIT 1 ;";
 		System.out.print(query + "\n");
 		dataBase.myQuery(query);
 		
@@ -82,6 +87,27 @@ public class Orders
 		dataBase.myQuery(query);
 	}
 
+	public boolean	exist() throws SQLException
+	{
+		String	query;
+		
+		query = "SELECT `id` FROM `jcsi`.`orders` " +
+				"WHERE `orders`.`productId` = '" + productId + "' " +
+				"AND `orders`.`ordersDate` = '" + ordersDate.getDate() + "' " +
+				"AND `orders`.`deliveryDate` = '" + deliveryDate.getDate() + "' " +
+				"AND `orders`.`quantity` = '" + quantity + "'";
+		System.out.print(query + "\n");
+		dataBase.result = dataBase.state.executeQuery(query);
+		
+		if (dataBase.result.next())
+		{
+			System.out.print("Order exists in dataBase\n");
+			return true;
+		}
+		System.out.print("Order does not exist in dataBase\n");
+		return false;
+	}
+	
 	public int getId() {return id;}
 	public int getProductId() {return productId;}
 	public Date getOrdersDate() {return ordersDate;}

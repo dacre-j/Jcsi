@@ -26,8 +26,8 @@ public class Ordering
 		String				string;
 		Orders				curr;
 		
-		string = "Ordering instance"
-				+ "\n\tcustomerId: " + customerId;		
+		string = "Ordering instance" +
+				"\n\tcustomerId: " + customerId;		
 		while (it.hasNext())
 		{
 			curr = it.next();				
@@ -46,10 +46,10 @@ public class Ordering
 		while (it.hasNext())
 		{
 			curr = it.next();
-			query = "INSERT INTO `jcsi`.`ordering` (`id`, `customerId`, `ordersId`)" +
-					"		 VALUES (NULL"
-					+ ", '" + customerId
-					+ "', '" + curr.getId() + "');";
+			query = "INSERT INTO `jcsi`.`ordering` (`id`, `customerId`, `ordersId`) " +
+					"VALUES (NULL, " +
+					"'" + customerId + "', " +
+					"'" + curr.getId() + "');";
 			System.out.print(query + "\n");
 			dataBase.myQuery(query);
 		}
@@ -64,10 +64,10 @@ public class Ordering
 		while (it.hasNext())
 		{
 			curr = it.next();
-			query = "DELETE FROM `jcsi`.`ordering` "
-					+ " WHERE `ordering`.`customerId` = '" + customerId + "'"
-					+ " AND `ordering`.`ordersId` = '" + curr.getId() + "'"
-					+ " ;";
+			query = "DELETE FROM `jcsi`.`ordering` " +
+					"WHERE `ordering`.`customerId` = '" + customerId + "' " +
+					"AND `ordering`.`ordersId` = '" + curr.getId() + "'" +
+					";";
 			System.out.print(query + "\n");
 			dataBase.myQuery(query);
 		}
